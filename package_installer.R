@@ -33,3 +33,4 @@ install.packages("RcppRedis")
 
 # text mining
 install.packages("jiebaR")
+install.packages("coreNLP")
