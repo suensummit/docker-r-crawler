@@ -2,8 +2,17 @@ FROM c3h3/r-nlp:sftp
 
 MAINTAINER Summit Suen <summit.suen@gmail.com>
 
+# Update basic packages
 RUN sudo apt-get update && \
-    apt-get install -y libhiredis-dev libssl-dev cron
+    apt-get install -y libhiredis-dev libssl-dev cron vim man
+
+# Set root password
+ENV ROOT_PASS="ntu-copens"
+ADD set_root_pw.sh /set_root_pw.sh
+ADD run.sh /run.sh
+RUN chmod +x /*.sh
+ENV AUTHORIZED_KEYS **None**
+RUN sh /run.sh
 
 # add webupd8 repository
 RUN \
@@ -29,7 +38,12 @@ RUN \
 RUN sudo echo "Asia/Taipei" > /etc/timezone && \
     sudo dpkg-reconfigure -f noninteractive tzdata
 
+# Set required R packages
 ADD package_installer.R /tmp/package_installer.R
 RUN cd /tmp && Rscript package_installer.R
+
+# Set required Python packages
+ADD requirements.txt /tmp/requirements.txt
+RUN pip install -r /tmp/requirements.txt
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
