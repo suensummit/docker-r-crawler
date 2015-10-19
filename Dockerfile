@@ -6,6 +6,8 @@ MAINTAINER Summit Suen <summit.suen@gmail.com>
 RUN sudo apt-get update && \
     apt-get install -y libhiredis-dev libssl-dev cron vim man
 
+RUN apt-get update && apt-get -y install git-core build-essential gfortran sudo make cmake libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm vim
+
 # Set root password
 #ENV ROOT_PASS="ntu-copens"
 #ADD set_root_pw.sh /set_root_pw.sh
@@ -44,7 +46,7 @@ ADD package_installer.R /tmp/package_installer.R
 RUN cd /tmp && Rscript package_installer.R
 
 # Set required Python packages
-ADD requirements.txt /tmp/requirements.txt
-RUN pip install -r /tmp/requirements.txt
+#ADD requirements.txt /tmp/requirements.txt
+#RUN pip install -r /tmp/requirements.txt
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
