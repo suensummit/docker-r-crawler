@@ -7,12 +7,13 @@ RUN sudo apt-get update && \
     apt-get install -y libhiredis-dev libssl-dev cron vim man
 
 # Set root password
-ENV ROOT_PASS="ntu-copens"
-ADD set_root_pw.sh /set_root_pw.sh
-ADD run.sh /run.sh
-RUN chmod +x /*.sh
-ENV AUTHORIZED_KEYS **None**
-RUN sh /run.sh
+#ENV ROOT_PASS="ntu-copens"
+#ADD set_root_pw.sh /set_root_pw.sh
+#ADD run.sh /run.sh
+#RUN chmod +x /*.sh
+#ENV AUTHORIZED_KEYS **None**
+#RUN sh /run.sh
+ENV ROOT=TRUE
 
 # add webupd8 repository
 RUN \
