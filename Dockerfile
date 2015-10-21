@@ -9,12 +9,6 @@ RUN sudo apt-get update && \
 RUN apt-get update && apt-get -y install git-core build-essential gfortran sudo make cmake libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm vim
 
 # Set root password
-#ENV ROOT_PASS="ntu-copens"
-#ADD set_root_pw.sh /set_root_pw.sh
-#ADD run.sh /run.sh
-#RUN chmod +x /*.sh
-#ENV AUTHORIZED_KEYS **None**
-#RUN sh /run.sh
 ENV ROOT=TRUE
 
 # add webupd8 repository
@@ -44,9 +38,5 @@ RUN sudo echo "Asia/Taipei" > /etc/timezone && \
 # Set required R packages
 ADD package_installer.R /tmp/package_installer.R
 RUN cd /tmp && Rscript package_installer.R
-
-# Set required Python packages
-#ADD requirements.txt /tmp/requirements.txt
-#RUN pip install -r /tmp/requirements.txt
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
